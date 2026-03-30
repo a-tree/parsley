@@ -1,0 +1,18 @@
+version: '3'
+
+tasks:
+  gen:backend:
+    desc: "oapi-codegenを実行"
+    cmds:
+      - oapi-codegen -config backend/oapi-codegen.cfg.yml api/openapi.yaml
+
+  gen:bff:
+    desc: "openapi-typescriptを実行"
+    cmds:
+      - npx openapi-typescript api/openapi.yaml -o bff/src/types/api.d.ts
+
+  generate:
+    desc: "全てのコード生成を実行"
+    cmds:
+      - task: gen:backend
+      - task: gen:bff
