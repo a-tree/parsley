@@ -1,0 +1,103 @@
+# Golang
+
+# If you prefer the allow list template instead of the deny list, see community template:
+# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
+#
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Code coverage profiles and other test artifacts
+*.out
+coverage.*
+*.coverprofile
+profile.cov
+coverage/
+
+# Dependency directories (remove the comment below to include it)
+vendor/
+
+# Go workspace file
+go.work
+go.work.sum
+
+# env file
+.env
+.env.develop
+.env.test
+.env.production
+
+# OS dependent files
+.DS_Store
+Thumbs.db
+
+# DB
+*.db
+**/*.db
+
+# Log
+*.log*
+
+# NYC
+.nyc_output/
+
+# Build
+/lib
+/dist
+/dist.zip
+/cloudflare-pages
+/api-docs
+/api-docs-markdown
+/karma-temp
+
+# eslint
+.eslintcache
+/cache.tsbuildinfo
+
+/web.config
+/vwd.webinfo
+
+# Tools
+.claude/
+.idea/
+.jshintrc
+.project
+.puppeteer_profile/
+.vs/
+.vscode/
+*~
+*.pyc
+*.sublime-project
+*.sublime-workspace
+.idea
+*.iml
+.vscode
+*.swp
+*.swo
+*.user
+Generated\ Files/
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+bin/
+obj/
+/tmp
+
+# Node
+node_modules
+node_modules/*
+**/node_modules
+npm-debug.log
+bower_components/*
+*.swp
+.module-cache
+.flowconfig
+.grunt
+_SpecRunner.html
+__benchmarks__
