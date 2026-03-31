@@ -1,5 +1,11 @@
 version: '3'
 
+includes:
+  backend:
+    taskfile: ./backend/Taskfile.yaml
+    dir: ./backend    # backendディレクトリ内で実行することを指定
+    internal: false   # ルートから backend:test のように呼べるようにする
+
 tasks:
   gen:backend:models:
     desc: "ドメインモデルを生成"
@@ -23,14 +29,21 @@ tasks:
       - task: gen:backend:api
       - task: gen:bff
 
-  test:backend:
+  test:all:
     desc: "バックエンドのテスト（マッピングチェックを含む）を実行"
-    dir: backend
     cmds:
-      - go test -v ./internal/...
+      - task: backend:test
+      # - task: bff:test
 
   gen-and-test:
     desc: "コード生成とテストを連続実行"
     cmds:
       - task: generate
-      - task: test:backend
+      - task: test:all
+  
+  make:
+    desc: "テストしてビルド"
+    cmds:
+      - task: backend:test
+      # - task: bff:test
+      - task: backend:build

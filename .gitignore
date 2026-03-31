@@ -55,6 +55,7 @@ Thumbs.db
 /api-docs
 /api-docs-markdown
 /karma-temp
+/bin/*
 
 # eslint
 .eslintcache
