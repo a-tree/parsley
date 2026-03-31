@@ -14,7 +14,7 @@ type Handler struct {
 }
 
 // NewHandler はハンドラーを初期化します
-func NewHandler(ur repository.UserRepository) *Handler {
+func NewUserHandler(ur repository.UserRepository) *Handler {
 	return &Handler{repo: ur}
 }
 
