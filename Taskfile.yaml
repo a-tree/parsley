@@ -22,3 +22,15 @@ tasks:
       - task: gen:backend:models
       - task: gen:backend:api
       - task: gen:bff
+
+  test:backend:
+    desc: "バックエンドのテスト（マッピングチェックを含む）を実行"
+    dir: backend
+    cmds:
+      - go test -v ./internal/...
+
+  gen-and-test:
+    desc: "コード生成とテストを連続実行"
+    cmds:
+      - task: generate
+      - task: test:backend
