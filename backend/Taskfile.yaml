@@ -1,0 +1,12 @@
+version: '3'
+
+tasks:
+  test:
+    desc: "バックエンドテスト"
+    cmds:
+      - go test -v ./internal/...
+
+  build:
+    desc: "ビルド"
+    cmds:
+      - go build -o ../bin/backend ./cmd/backend/main.go
