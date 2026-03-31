@@ -19,20 +19,41 @@
 
 ## ディレクトリ構成
 ```
-parsley/
-  api/
-    openapi.yaml          # 全ての設計の基盤 バックエンドとBFFの両方から参照
-  backend/                # Go + Echo
-    internal/api/         # 自動生成コードの出力先
-    oapi-codegen.cfg.yaml # backend専用の生成設定 バックエンドの実装に近い場所に置くのが一般的
-    main.go
-  bff/                    # TS + Node.js + express
-    src/types/            # openapi-typescriptの出力先
-    src/index.ts
-  web/                    # HTMX / Static contents
-  scripts/                # (オプション) 補助スクリプト
-  Taskfile.yaml            # ルートに置くことで全体を制御 task gen コマンド一つでbackendとbffの両方のコード生成を走らせるため
-  docker-compose.yaml
+parsley
+├── api
+│   └── openapi.yaml
+├── backend
+│   ├── cmd
+│   │   └── backend
+│   │       └── main.go
+│   ├── go.mod
+│   ├── go.sum
+│   └── internal
+│       ├── api
+│       │   ├── api.gen.go
+│       │   ├── config.yaml
+│       │   └── handler.go
+│       ├── config
+│       │   └── config.go
+│       ├── domain
+│       │   └── models
+│       │       ├── config.yaml
+│       │       └── models.gen.go
+│       └── repository
+│           ├── db.go
+│           ├── user_repo_test.go
+│           └── user_repo.go
+├── bff
+│   ├── package-lock.json
+│   ├── package.json
+│   └── src
+│       └── types
+│           └── api.d.ts
+├── LICENSE
+├── README.md
+├── scripts
+├── Taskfile.yaml
+└── web
 ```
 
 ## 構成

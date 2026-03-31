@@ -6,11 +6,15 @@ package: api
 # 生成するコンテンツの指定
 generate:
   echo-server: true   # Echoフレームワーク用のサーバーボイラープレートを生成
-  models: true        # スキーマ定義（Userなど）に基づいたGoの構造体を生成
   embedded-spec: true # 生成されたコード内にOpenAPI定義を埋め込み、バリデーション等に利用可能にする
 
 # 出力ファイルパス（Taskfileの実行場所からの相対パス、または絶対パス）
-output: internal/api/api.gen.go
+output: backend/internal/api/api.gen.go
+
+# 外部パッケージのモデルをimportするための設定
+# additional-imports:
+#   - package: backend/internal/domain/models # プロジェクト名に合わせたパス
+#     alias: . # ドットインポートすることで生成コード内の型参照を壊さないようにする
 
 # オプション設定
 output-options:

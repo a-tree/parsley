@@ -1,12 +1,11 @@
 openapi: 3.1.0
 info:
   title: Parsley API
-  description: ユーザー情報の登録・取得・変更・削除を行うためのCRUD API。
+  description: ユーザー情報の管理を行うAPI（IDはDB側で管理）。
   version: 1.0.0
 
 servers:
   - url: http://localhost:8080
-    description: ローカル開発用APIサーバー (Go + Echo)
 
 paths:
   /users:
@@ -15,7 +14,7 @@ paths:
       operationId: listUsers
       responses:
         '200':
-          description: ユーザー一覧の取得成功
+          description: ユーザー一覧
           content:
             application/json:
               schema:
@@ -30,10 +29,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRegistration'
+              $ref: '#/components/schemas/User'
       responses:
         '201':
-          description: ユーザーの作成完了
+          description: 登録完了
           content:
             application/json:
               schema:
@@ -46,20 +45,17 @@ paths:
         required: true
         schema:
           type: integer
-          format: int64
+          format: uint # GORMのuint型に合わせる
     get:
       summary: 特定ユーザーの取得
       operationId: getUserById
       responses:
         '200':
-          description: ユーザー情報の取得成功
+          description: 成功
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        '404':
-          description: ユーザーが見つかりません
-
     put:
       summary: 登録内容の変更
       operationId: updateUser
@@ -68,7 +64,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRegistration'
+              $ref: '#/components/schemas/User'
       responses:
         '200':
           description: 更新成功
@@ -76,29 +72,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        '404':
-          description: ユーザーが見つかりません
-
     delete:
       summary: ユーザーの削除
       operationId: deleteUser
       responses:
         '204':
-          description: 削除成功（レスポンスボディなし）
+          description: 削除成功
 
 components:
   schemas:
     User:
       type: object
       required:
-        - id
         - name
         - email
       properties:
-        id:
-          type: integer
-          format: int64
-          readOnly: true
         name:
           type: string
           example: "パセリ太郎"
@@ -106,15 +94,3 @@ components:
           type: string
           format: email
           example: "parsley@example.com"
-
-    UserRegistration:
-      type: object
-      required:
-        - name
-        - email
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-          format: email

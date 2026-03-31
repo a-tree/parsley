@@ -1,0 +1,15 @@
+# parsley/backend/oapi-codegen.cfg.yml
+
+# 生成されるコードのパッケージ名
+package: models
+
+# 生成するコンテンツの指定
+generate:
+  models: true        # スキーマ定義（Userなど）に基づいたGoの構造体を生成
+
+# 出力ファイルパス（Taskfileの実行場所からの相対パス、または絶対パス）
+output: backend/internal/domain/models/models.gen.go
+
+# オプション設定
+output-options:
+  skip-prune: true    # 未使用の定義も削除せずに生成する（開発初期に便利）
