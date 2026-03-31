@@ -1,0 +1,46 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "compilerOptions": {
+    // File Layout
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // Environment Settings
+    // See also https://aka.ms/tsconfig/module
+    "module": "nodenext",  // Node.jsの最新ルールに従う（.js拡張子が必要なモード）
+    "moduleResolution": "nodenext", 
+    "target": "esnext",
+    // "types": [],
+    // For nodejs:
+    "lib": ["esnext"],  // モダンなJS機能を使えるようにする
+    "types": ["node"],  // Node.jsの型を認識させる
+    // and npm install -D @types/node
+
+    // Other Outputs
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Style Options
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    // Recommended Options
+    "strict": true,
+    "jsx": "react-jsx",
+    "verbatimModuleSyntax": true,  // 厳格なインポート/エクスポートを強制
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,  // 外部ライブラリの型エラーは無視する（必須級）
+  },
+  "include": ["src/**/*"]          // srcフォルダ内のファイルだけを対象にする
+}
