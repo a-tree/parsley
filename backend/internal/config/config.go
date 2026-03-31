@@ -11,8 +11,6 @@ import (
 )
 
 type Config struct {
-	AppEnv string `toml:"env" env:"APP_ENV"`
-
 	Database struct {
 		Name string `toml:"name" env:"NAME,required"`
 		Host string `toml:"host" env:"HOST"`
@@ -35,7 +33,7 @@ func NewConfig() (*Config, error) {
 
 	path := ConfigPath("./config/config.toml")
 	newConfig, err := ParseToml(path)
-	envFile := fmt.Sprintf(".env.%s", newConfig.AppEnv)
+	envFile := fmt.Sprintf(".env.%s", appEnv)
 
 	// ファイルが存在する場合のみ読み込む（本番環境等でファイルがないケースを許容）
 	_, err = os.Stat(envFile)
@@ -70,7 +68,6 @@ func ParseToml(path string) (Config, error) {
 func defaultConfig() Config {
 	defaultConfig := Config{}
 
-	defaultConfig.AppEnv = "develop"
 	defaultConfig.Database.Name = "dev"
 	defaultConfig.Database.Host = "localhost"
 	defaultConfig.Database.Port = 5432

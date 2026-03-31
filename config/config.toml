@@ -1,0 +1,6 @@
+
+[database]
+    name = "dev"
+
+[api]
+    port = 8080
