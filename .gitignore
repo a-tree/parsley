@@ -49,8 +49,8 @@ Thumbs.db
 
 # Build
 /lib
-/dist
-/dist.zip
+**/dist
+**/dist.zip
 /cloudflare-pages
 /api-docs
 /api-docs-markdown
