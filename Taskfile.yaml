@@ -1,9 +1,16 @@
 version: '3'
 
+output: prefixed # 各行の先頭に [backend:dev-start] のようなラベルが付く
+
 includes:
   backend:
     taskfile: ./backend/Taskfile.yaml
     dir: ./backend    # backendディレクトリ内で実行することを指定
+    internal: false   # ルートから backend:test のように呼べるようにする
+
+  bff:
+    taskfile: ./bff/Taskfile.yaml
+    dir: ./bff    # backendディレクトリ内で実行することを指定
     internal: false   # ルートから backend:test のように呼べるようにする
 
 tasks:
@@ -45,5 +52,34 @@ tasks:
     desc: "テストしてビルド"
     cmds:
       - task: backend:test
-      # - task: bff:test
+      - task: bff:test
       - task: backend:build
+      - task: bff:build
+
+  up:
+    desc: "Docker環境（Nginx）を起動"
+    cmds:
+      - docker-compose up -d
+
+  down:
+    desc: "Docker環境を停止"
+    cmds:
+      - docker-compose down
+
+  status:
+    desc: "コンテナの状態を確認"
+    cmds:
+      - docker ps -a --filter name=parsley
+
+  # サーバー類を並列で動かすための内部タスク
+  _start-servers-dev:
+    internal: true
+    deps:
+      - backend:dev-start
+      - bff:start
+
+  dev-start:
+    desc: "全サービスを起動（Nginx起動後にサーバー群を並列起動）"
+    cmds:
+      - task: up
+      - task: _start-servers-dev

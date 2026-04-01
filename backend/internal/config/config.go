@@ -20,7 +20,8 @@ type Config struct {
 	} `toml:"database" envPrefix:"DB_"`
 
 	Api struct {
-		Port int `toml:"port" env:"PORT"`
+		Port int    `toml:"port" env:"PORT"`
+		Host string `toml:"host" env:"HOST"`
 	} `toml:"api" envPrefix:"API_"`
 }
 
@@ -31,7 +32,7 @@ func NewConfig() (*Config, error) {
 		appEnv = "develop"
 	}
 
-	path := ConfigPath("./config/config.toml")
+	path := ConfigPath("../config/config.toml")
 	newConfig, err := ParseToml(path)
 	envFile := fmt.Sprintf(".env.%s", appEnv)
 
@@ -40,13 +41,13 @@ func NewConfig() (*Config, error) {
 	if err == nil {
 		err = godotenv.Load(envFile)
 		if err != nil {
-			return nil, fmt.Errorf("failed to load %s: %w", envFile, err)
+			return nil, fmt.Errorf("[Config] os.Stat Error %s: %w\n", envFile, err)
 		}
 	}
 
-	err = env.Parse(newConfig)
+	err = env.Parse(&newConfig)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse config: %w", err)
+		return nil, fmt.Errorf("[Config] env.Parse Error %w\n", err)
 	}
 
 	return &newConfig, nil
@@ -56,11 +57,12 @@ func ParseToml(path string) (Config, error) {
 	config := defaultConfig()
 	f, err := os.Open(path)
 	if err != nil {
+		fmt.Printf("[Config] os.Open Error %s %v\n", path, err)
 		return config, err
 	}
 	defer f.Close()
 	if _, err := toml.NewDecoder(f).Decode(&config); err != nil {
-		return config, fmt.Errorf("[setting] 設定デコードエラー: %v", err)
+		return config, fmt.Errorf("[Config] toml.NewDecoder Error %s %v\n", path, err)
 	}
 	return config, nil
 }
@@ -72,6 +74,7 @@ func defaultConfig() Config {
 	defaultConfig.Database.Host = "localhost"
 	defaultConfig.Database.Port = 5432
 	defaultConfig.Api.Port = 8080
+	defaultConfig.Api.Host = "localhost"
 
 	return defaultConfig
 }

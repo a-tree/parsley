@@ -6,7 +6,17 @@ tasks:
     cmds:
       - go test -v ./internal/...
 
+  dev-start:
+    desc: "開発用実行"
+    cmds:
+      - go run ./cmd/backend/main.go
+
   build:
-    desc: "ビルド"
+    desc: "バイナリビルド"
     cmds:
       - go build -o ../bin/backend ./cmd/backend/main.go
+
+  start:
+    desc: "ビルドバイナリ実行"
+    cmds:
+      - ../bin/backend

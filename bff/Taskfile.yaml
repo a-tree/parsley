@@ -1,0 +1,18 @@
+version: '3'
+
+tasks:
+  test:
+    desc: "BFFテスト"
+    cmds:
+      - npm test
+
+  compile:
+    desc: "BFFコンパイル"
+    cmds:
+      - npx tsc
+  
+  start:
+    desc: "BFFスタート"
+    cmds:
+      - task: compile
+      - node ./dist/index.js

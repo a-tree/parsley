@@ -3,6 +3,7 @@ package api
 import (
 	"backend/internal/domain/models"
 	"backend/internal/repository"
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -25,6 +26,7 @@ var _ ServerInterface = (*Handler)(nil)
 func (h *Handler) ListUsers(ctx echo.Context) error {
 	users, err := h.repo.GetAll()
 	if err != nil {
+		fmt.Printf("[handler] ListUsers h.repo.GetAll() Error %v\n", err)
 		return ctx.JSON(http.StatusNotFound, users)
 	}
 	return ctx.JSON(http.StatusOK, users)
@@ -34,9 +36,11 @@ func (h *Handler) ListUsers(ctx echo.Context) error {
 func (h *Handler) CreateUser(ctx echo.Context) error {
 	user := new(models.User)
 	if err := ctx.Bind(user); err != nil {
+		fmt.Printf("[handler] CreateUser ctx.Bind(user) Error %v\n", err)
 		return err
 	}
 	if err := h.repo.Create(user); err != nil {
+		fmt.Printf("[handler] CreateUser h.repo.Create Error %v\n", err)
 		return err
 	}
 	return ctx.JSON(http.StatusCreated, user)
@@ -46,6 +50,7 @@ func (h *Handler) CreateUser(ctx echo.Context) error {
 func (h *Handler) GetUserById(ctx echo.Context, id uint) error {
 	user, err := h.repo.FindUser(id)
 	if err != nil {
+		fmt.Printf("[handler] GetUserById h.repo.FindUser Error %v\n", err)
 		return ctx.JSON(http.StatusNotFound, user)
 	}
 	return ctx.JSON(http.StatusOK, user)

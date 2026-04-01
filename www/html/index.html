@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>User CRUD with HTMX</title>
+    <!-- htmxの読み込み (CDN経由) -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        /* 通信中のインジケーター設定 */
+        .htmx-indicator {
+            display: none;
+        }
+        .htmx-request .htmx-indicator {
+            display: inline;
+        }
+        .htmx-request.htmx-indicator {
+            display: inline;
+        }
+        #result-area {
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>ユーザー管理</h1>
+
+    <!-- フォーム全体でバリデーションを有効化 -->
+    <form hx-target="#result-area" hx-indicator="#loading">
+        <div>
+            <label>Name: 
+                <input type="text" name="Name" id="name-input" required
+                       hx-get="/users"
+                       hx-trigger="keyup changed delay:500ms" 
+                       hx-vals='{"SearchBy": "name"}'
+                       hx-include="#email-input">
+            </label>
+        </div>
+        <div>
+            <label>Email: 
+                <input type="email" name="Email" id="email-input" required
+                       hx-get="/users" 
+                       hx-trigger="keyup changed delay:500ms" 
+                       hx-vals='{"SearchBy": "email"}'
+                       hx-include="#name-input">
+            </label>
+        </div>
+
+        <div style="margin-top: 10px;">
+            <!-- [作成] ボタン: POSTリクエストを発行 -->
+            <!-- hx-validate="true" でHTML5のバリデーションを強制し、空送信を防止 -->
+            <button hx-post="/users" hx-validate="true">作成</button>
+
+            <!-- [検索] ボタン: GETリクエストを発行 -->
+            <button hx-get="/users" hx-vals='{"SearchBy": "name"}'>検索</button>
+
+            <!-- [全員取得] ボタン: 全リストを表示 -->
+            <button hx-get="/users">全員取得</button>
+        </div>
+    </form>
+
+    <!-- 通信中状態の表示 -->
+    <div id="loading" class="htmx-indicator">通信中...</div>
+
+    <!-- APIの結果（BFFが生成したHTML断片）が表示されるエリア -->
+    <div id="result-area">
+        <p>結果はここに表示されます</p>
+    </div>
+
+</body>
+</html>

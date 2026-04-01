@@ -63,6 +63,7 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 func (r *gormUserRepository) Create(user *models.User) error {
 	dbuser, err := UserRepoMapToDB(user)
 	if err != nil {
+		fmt.Printf("[user_repo] Create UserRepoMapToDB Error %v\n", err)
 		return fmt.Errorf("ERROR: %v", err)
 	}
 	return r.db.Create(dbuser).Error
@@ -72,11 +73,13 @@ func (r *gormUserRepository) GetAll() ([]models.User, error) {
 	var dbusers []UserDB
 	err := r.db.Find(&dbusers).Error
 	if err != nil {
+		fmt.Printf("[user_repo] GetAll r.db.Find(&dbusers) Error %v\n", err)
 		return nil, err
 	}
 
 	usersPtr, err := UserRepoMapToDomainArray(dbusers)
 	if err != nil {
+		fmt.Printf("[user_repo] GetAll UserRepoMapToDomainArray Error %v\n", err)
 		return nil, err
 	}
 
@@ -87,11 +90,13 @@ func (r *gormUserRepository) FindUser(id uint) (*models.User, error) {
 	var dbusers UserDB
 	err := r.db.Where("id = ?", id).First(&dbusers).Error
 	if err != nil {
+		fmt.Printf("[user_repo] FindUser r.db.Where.First Error %v\n", err)
 		return nil, err
 	}
 
 	userPtr, err := UserRepoMapToDomain(&dbusers)
 	if err != nil {
+		fmt.Printf("[user_repo] FindUser UserRepoMapToDomain %v\n", err)
 		return nil, err
 	}
 

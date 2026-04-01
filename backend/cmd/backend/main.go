@@ -20,6 +20,7 @@ func main() {
 	e := echo.New()
 	db, err := repository.NewDB(cfg)
 	if err != nil {
+		fmt.Printf("[main] repository.NewDB Error %v", err)
 		return
 	}
 	repo := repository.NewUserRepository(db)

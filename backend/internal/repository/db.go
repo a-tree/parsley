@@ -21,7 +21,7 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		dialector = postgres.Open(dsn)
 	} else {
 		// Development SQLite
-		dbName := fmt.Sprintf("%s.db", cfg.Database.Name)
+		dbName := fmt.Sprintf("../db/%s.db", cfg.Database.Name)
 		dialector = sqlite.Open(dbName)
 	}
 
