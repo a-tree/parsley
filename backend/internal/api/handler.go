@@ -9,17 +9,16 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// Handler は ServerInterface を実装する構造体です
 type Handler struct {
 	repo repository.UserRepository
 }
 
-// NewHandler はハンドラーを初期化します
 func NewUserHandler(ur repository.UserRepository) *Handler {
 	return &Handler{repo: ur}
 }
 
-// インターフェースが正しく実装されているかコンパイル時にチェックします
+// インターフェースが正しく実装されているかコンパイル時にチェック
+// コンパイル時に、もしHandlerがServerInterfaceで定義されたメソッドを1つでも実装していなければ、コンパイラが「型が一致しません」とエラーを出す
 var _ ServerInterface = (*Handler)(nil)
 
 // 全ユーザーの取得
