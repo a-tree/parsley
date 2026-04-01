@@ -1,4 +1,4 @@
-# parsley/backend/oapi-codegen.cfg.yml
+# parsley/backend/domain/model/config.yaml
 
 # 生成されるコードのパッケージ名
 package: models

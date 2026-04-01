@@ -29,6 +29,11 @@ tasks:
     cmds:
       - npx openapi-typescript api/openapi.yaml -o bff/src/types/api.d.ts
 
+  gen:docs:
+    desc: "ReDocを使用してAPIドキュメント(HTML)を生成"
+    cmds:
+      - npx @redocly/cli build-docs api/openapi.yaml -o www/html/docs.html
+
   generate:
     desc: "全てのコード生成を実行"
     cmds:
