@@ -1,6 +1,7 @@
 
 [database]
     name = "dev"
+    host = "localhost"
+    port = 5432
 
 [api]
-    port = 8080
